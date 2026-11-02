@@ -1,0 +1,9 @@
+<svg width="160" height="40" viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <text x="0" y="30" font-family="Inter, sans-serif" font-size="28" font-weight="800" fill="url(#goldGradient)">AVENZA</text>
+  <defs>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d4af37;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f4e5a8;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>

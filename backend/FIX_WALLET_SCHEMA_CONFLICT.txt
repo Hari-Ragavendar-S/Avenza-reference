@@ -1,0 +1,64 @@
+╔══════════════════════════════════════════════════════════════╗
+║          FIX WALLET SCHEMA CONFLICT - QUICK DEPLOY          ║
+╚══════════════════════════════════════════════════════════════╝
+
+ISSUE:
+The existing wallet.py routes imports schemas that conflict with
+our new Web3 wallet auth schemas.
+
+SOLUTION:
+Renamed wallet auth schemas to wallet_auth.py to avoid conflict.
+
+FILES TO UPLOAD TO VPS:
+════════════════════════════════════════════════════════════════
+
+1. app/schemas/wallet_auth.py (NEW FILE)
+2. app/routes/wallet_auth.py (UPDATED - imports from wallet_auth)
+
+DEPLOYMENT COMMANDS:
+════════════════════════════════════════════════════════════════
+
+# SSH to VPS
+ssh root@148.135.138.145
+
+# Navigate to backend
+cd /var/www/avenza/backend
+
+# Upload wallet_auth.py schema (from Windows PowerShell):
+scp "c:\Techneysoft apps\Avenza\backend\app\schemas\wallet_auth.py" root@148.135.138.145:/var/www/avenza/backend/app/schemas/
+
+# Upload updated wallet_auth.py route (from Windows PowerShell):
+scp "c:\Techneysoft apps\Avenza\backend\app\routes\wallet_auth.py" root@148.135.138.145:/var/www/avenza/backend/app/routes/
+
+# Restart service (on VPS):
+systemctl restart avenza
+
+# Check status (on VPS):
+systemctl status avenza
+
+# If still issues, check logs:
+journalctl -u avenza -f
+
+VERIFICATION:
+════════════════════════════════════════════════════════════════
+
+Service should start without errors.
+All 5 wallet auth endpoints should be accessible:
+- POST /api/auth/wallet-nonce
+- POST /api/auth/wallet-login
+- POST /api/user/connect-wallet
+- POST /api/user/disconnect-wallet
+- GET  /api/user/wallet-status
+
+WHAT THIS FIXES:
+════════════════════════════════════════════════════════════════
+
+✅ Removes import conflict between:
+   - app/schemas/wallet.py (deposit/withdrawal schemas)
+   - app/schemas/wallet_auth.py (Web3 wallet auth schemas)
+
+✅ Both wallet systems can now coexist:
+   - Original wallet system (deposits/withdrawals)
+   - New Web3 wallet authentication system
+
+✅ Backend will start successfully

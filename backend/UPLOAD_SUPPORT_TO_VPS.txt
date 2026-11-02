@@ -1,0 +1,110 @@
+# UPLOAD SUPPORT CHAT BACKEND TO VPS
+
+# ============================================
+# STEP 1: Upload files from Windows to VPS
+# ============================================
+
+# Run these commands from: c:\Techneysoft apps\Avenza\backend
+
+scp migrations/support_setup.py root@148.135.138.145:/var/www/avenza/backend/migrations/
+
+scp app/schemas/support.py root@148.135.138.145:/var/www/avenza/backend/app/schemas/
+
+scp app/routes/support.py root@148.135.138.145:/var/www/avenza/backend/app/routes/
+
+scp app/main.py root@148.135.138.145:/var/www/avenza/backend/app/
+
+
+# ============================================
+# STEP 2: Connect to VPS and run migration
+# ============================================
+
+ssh root@148.135.138.145
+
+# Then run these commands on VPS:
+
+cd /var/www/avenza/backend
+source venv/bin/activate
+python migrations/support_setup.py
+
+
+# ============================================
+# STEP 3: Restart backend service
+# ============================================
+
+sudo systemctl restart avenza
+sudo systemctl status avenza
+
+
+# ============================================
+# STEP 4: Verify installation
+# ============================================
+
+# Check API docs (should show Support Chat endpoints)
+curl https://avenza.live/api/docs
+
+# Test user endpoint
+curl -X GET "https://avenza.live/api/support/messages" \
+  -H "Authorization: Bearer YOUR_USER_TOKEN"
+
+# Test admin endpoint
+curl -X GET "https://avenza.live/api/admin/support/users?page=1&per_page=20" \
+  -H "Authorization: Bearer YOUR_ADMIN_TOKEN"
+
+
+# ============================================
+# Expected Migration Output:
+# ============================================
+
+🚀 Starting support chat system setup...
+Creating support_messages table...
+✅ Support messages table created
+Creating indexes...
+✅ Indexes created
+Creating support conversations view...
+✅ Support conversations view created
+
+📊 Current Data:
+- Total support messages: 0
+- Total user conversations: 0
+- Unread user messages: 0
+
+✨ Support chat system setup complete!
+
+⚠️  Next steps:
+1. Upload schemas/support.py to VPS
+2. Upload routes/support.py to VPS
+3. Update main.py to include support routes
+4. Restart backend: sudo systemctl restart avenza
+
+
+# ============================================
+# FILES UPLOADED:
+# ============================================
+
+1. migrations/support_setup.py       - Database migration
+2. app/schemas/support.py            - Pydantic models
+3. app/routes/support.py             - API endpoints
+4. app/main.py                       - Updated with support routes
+
+
+# ============================================
+# NEW API ENDPOINTS AVAILABLE:
+# ============================================
+
+USER ENDPOINTS:
+- GET  /api/support/messages         - Get chat history
+- POST /api/support/message          - Send message to admin
+- GET  /api/support/unread-count     - Get unread count
+
+ADMIN ENDPOINTS:
+- GET  /api/admin/support/users      - List user conversations
+- GET  /api/admin/support/chat/:id   - Get chat with user
+- POST /api/admin/support/reply      - Send reply to user
+- PUT  /api/admin/support/mark-read/:id - Mark as read
+- GET  /api/admin/support/stats      - Support statistics
+
+
+# ============================================
+# STATUS: ✅ READY TO UPLOAD
+# ============================================

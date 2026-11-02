@@ -1,0 +1,19 @@
+# Upload Downline Matching Bonus Backend
+
+# 1. Upload all files
+scp migrations/downline_matching_bonus_setup.py root@148.135.138.145:/var/www/avenza/backend/migrations/
+scp app/schemas/downline_matching.py root@148.135.138.145:/var/www/avenza/backend/app/schemas/
+scp app/utils/downline_matching.py root@148.135.138.145:/var/www/avenza/backend/app/utils/
+scp app/routes/downline_matching.py root@148.135.138.145:/var/www/avenza/backend/app/routes/
+scp app/utils/binary_matching.py root@148.135.138.145:/var/www/avenza/backend/app/utils/
+scp app/main.py root@148.135.138.145:/var/www/avenza/backend/app/
+
+# 2. SSH and run migration
+ssh root@148.135.138.145
+cd /var/www/avenza/backend
+source venv/bin/activate
+python migrations/downline_matching_bonus_setup.py
+
+# 3. Restart service
+systemctl restart avenza
+systemctl status avenza

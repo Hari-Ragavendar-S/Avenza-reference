@@ -1,0 +1,100 @@
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4a90e2, #357abd);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
+  transition: all 0.3s ease;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.scroll-to-top-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(74, 144, 226, 0.6);
+  background: linear-gradient(135deg, #357abd, #2868a8);
+}
+
+.scroll-to-top-btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
+}
+
+.scroll-to-top-btn svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 3;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+  .scroll-to-top-btn {
+    width: 45px;
+    height: 45px;
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .scroll-to-top-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Tablet optimization */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .scroll-to-top-btn {
+    width: 48px;
+    height: 48px;
+    bottom: 25px;
+    right: 25px;
+  }
+}
+
+/* Touch device optimization */
+@media (hover: none) and (pointer: coarse) {
+  .scroll-to-top-btn {
+    /* Larger touch target for mobile */
+    min-width: 48px;
+    min-height: 48px;
+  }
+
+  .scroll-to-top-btn:active {
+    background: linear-gradient(135deg, #2868a8, #1f5489);
+  }
+}
+
+/* Accessibility - high contrast mode */
+@media (prefers-contrast: high) {
+  .scroll-to-top-btn {
+    border: 2px solid white;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-to-top-btn {
+    animation: none;
+    transition: none;
+  }
+}

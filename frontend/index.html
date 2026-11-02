@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
+    <meta name="description" content="AVENZA - A modern platform for exploring global financial markets and market movements." />
+    <meta name="theme-color" content="#0a0e1a" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <title>AVENZA — Modern Trading Platform</title>
+    <style>
+      /* Smooth font rendering */
+      * {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        box-sizing: border-box;
+      }
+      
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+      
+      /* Prevent pull-to-refresh on mobile browsers */
+      body {
+        overscroll-behavior-y: contain;
+      }
+    </style>
+    <script>
+      // CRITICAL: Global scroll enforcement for mobile
+      // This prevents any component from permanently locking scroll
+      (function() {
+        // On page load, ensure body is scrollable
+        window.addEventListener('DOMContentLoaded', function() {
+          document.body.style.overflow = '';
+          document.body.style.position = '';
+          document.body.style.width = '';
+        });
+        
+        // Also check on page show (back/forward navigation)
+        window.addEventListener('pageshow', function() {
+          document.body.style.overflow = '';
+          document.body.style.position = '';
+          document.body.style.width = '';
+        });
+        
+        // Periodically check and fix scroll lock (every 500ms)
+        setInterval(function() {
+          var root = document.getElementById('root');
+          if (root && !root.querySelector('.mobile-menu-overlay')) {
+            // No mobile menu is open, ensure body is scrollable
+            if (document.body.style.overflow === 'hidden') {
+              document.body.style.overflow = '';
+              document.body.style.position = '';
+              document.body.style.width = '';
+            }
+          }
+        }, 500);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

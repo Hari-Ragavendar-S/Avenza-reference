@@ -1,0 +1,71 @@
+# VPS Quick Commands - Investment System Deployment
+
+## STEP 1: SSH into VPS
+ssh root@148.135.138.145
+
+## STEP 2: Navigate to Backend
+cd /var/www/avenza/backend
+
+## STEP 3: Activate Virtual Environment
+source venv/bin/activate
+
+## STEP 4: Run Migration
+python migrations/investment_setup.py
+
+## STEP 5: Restart Backend
+sudo systemctl restart avenza
+
+## STEP 6: Check Backend Status
+sudo systemctl status avenza
+
+## STEP 7: View Logs
+sudo journalctl -u avenza -f
+
+## STEP 8: Test API
+curl https://avenza.live/api/packages
+curl https://avenza.live/api/health
+
+## STEP 9: Make Cron Executable
+chmod +x /var/www/avenza/backend/cron_daily_profit.py
+
+## STEP 10: Create Logs Directory
+mkdir -p /var/www/avenza/backend/logs
+
+## STEP 11: Test Cron Manually
+python cron_daily_profit.py
+
+## STEP 12: Setup Cron Job
+crontab -e
+
+# Add this line (press 'i' to insert, then paste):
+1 0 * * * cd /var/www/avenza/backend && /var/www/avenza/backend/venv/bin/python /var/www/avenza/backend/cron_daily_profit.py >> /var/www/avenza/backend/logs/cron_daily_profit.log 2>&1
+
+# Press ESC, then type :wq and press ENTER to save
+
+## STEP 13: Verify Cron
+crontab -l
+
+## STEP 14: Monitor Cron Logs
+tail -f /var/www/avenza/backend/logs/cron_daily_profit.log
+
+## DATABASE VERIFICATION
+psql -U avenzauser -d avenzaweb
+SELECT * FROM investment_packages;
+\q
+
+## TROUBLESHOOTING
+# Check backend errors
+sudo journalctl -u avenza -n 50
+
+# Restart backend if needed
+sudo systemctl restart avenza
+
+# Check cron service
+sudo systemctl status cron
+
+# View system cron logs
+sudo grep CRON /var/log/syslog
+
+===================================
+DONE! System ready for frontend integration.
+===================================

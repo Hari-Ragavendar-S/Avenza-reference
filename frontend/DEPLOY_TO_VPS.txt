@@ -1,0 +1,173 @@
+============================================================
+🚀 QUICK DEPLOY - BINARY MATCHING FRONTEND
+============================================================
+
+✅ BUILD COMPLETED: frontend/dist/
+
+============================================================
+📦 OPTION 1: SCP UPLOAD (RECOMMENDED)
+============================================================
+
+# From Windows CMD/PowerShell:
+cd "c:\Techneysoft apps\Avenza\frontend"
+scp -r dist/* root@148.135.138.145:/var/www/avenza/frontend/dist/
+
+# Enter password when prompted
+
+============================================================
+📦 OPTION 2: MANUAL UPLOAD (If SCP not available)
+============================================================
+
+1. Open WinSCP or FileZilla
+2. Connect to:
+   - Host: 148.135.138.145
+   - Username: root
+   - Password: [your VPS password]
+   - Port: 22
+
+3. Navigate to: /var/www/avenza/frontend/dist/
+
+4. Upload these files from "c:\Techneysoft apps\Avenza\frontend\dist\":
+   - index.html
+   - assets/* (all files in assets folder)
+
+============================================================
+🔍 VERIFY DEPLOYMENT ON VPS
+============================================================
+
+# SSH into VPS
+ssh root@148.135.138.145
+
+# Check files uploaded
+ls -la /var/www/avenza/frontend/dist/
+ls -la /var/www/avenza/frontend/dist/assets/
+
+# Check nginx is serving
+curl -I https://avenza.live/
+
+# Restart nginx (if needed)
+systemctl restart nginx
+
+# Exit VPS
+exit
+
+============================================================
+🌐 TEST IN BROWSER
+============================================================
+
+1. Open: https://avenza.live/
+2. Clear browser cache (Ctrl+Shift+Delete)
+3. Hard refresh (Ctrl+F5)
+4. Login with test user
+5. Click "Binary Matching" in menu
+6. Test all 4 pages:
+   - Binary Matching Dashboard
+   - Binary Tree
+   - Matching Tiers
+   - Matching History
+
+============================================================
+✅ VERIFICATION CHECKLIST
+============================================================
+
+□ Files uploaded to /var/www/avenza/frontend/dist/
+□ index.html updated with new build
+□ assets/ folder contains new JS/CSS
+□ Browser cache cleared
+□ Can access https://avenza.live/
+□ "Binary Matching" menu item visible
+□ All 4 pages load without errors
+□ Referral links copy successfully
+□ Statistics display correctly
+□ Tree visualization shows
+□ History table paginates
+
+============================================================
+🐛 TROUBLESHOOTING
+============================================================
+
+Issue: 404 on Binary Matching pages
+Fix: Clear browser cache and hard refresh
+
+Issue: Menu item not showing
+Fix: Ensure dist/ files uploaded correctly
+
+Issue: Old version still showing
+Fix: Clear localStorage, logout and login again
+
+Issue: API errors (500/404)
+Fix: Backend already deployed, check service status
+
+Issue: Copy button not working
+Fix: Browser may block clipboard access (HTTPS required)
+
+============================================================
+📱 MOBILE TESTING
+============================================================
+
+Test on:
+- iPhone/Safari
+- Android/Chrome
+- Tablet devices
+
+Check:
+- All cards stack properly
+- Tables scroll horizontally
+- Buttons work on touch
+- Text is readable
+- No overflow issues
+
+============================================================
+🎯 EXPECTED RESULTS
+============================================================
+
+✓ New menu item "Binary Matching" appears
+✓ Dashboard shows statistics and referral links
+✓ Copy buttons show success toast
+✓ Tree page shows left/right placements
+✓ Tiers page shows all 10 tiers with progress
+✓ History page shows paginated records
+✓ All navigation works seamlessly
+✓ Mobile-responsive on all screens
+
+============================================================
+🔗 TEST REFERRAL LINKS
+============================================================
+
+After deployment, test registration:
+
+1. Copy left link from dashboard
+2. Open incognito/private window
+3. Paste link and register new user
+4. Check user appears in left position
+
+Format:
+https://avenza.live/register?ref=USERNAME&position=left
+https://avenza.live/register?ref=USERNAME&position=right
+
+============================================================
+📊 MONITORING
+============================================================
+
+Check logs after deployment:
+
+# Backend API logs
+ssh root@148.135.138.145
+journalctl -u avenza -f
+
+# Nginx access logs
+tail -f /var/log/nginx/access.log
+
+# Binary matching cron
+tail -f /var/log/avenza/binary_matching.log
+
+============================================================
+✅ DEPLOYMENT COMPLETE!
+============================================================
+
+Backend: ✅ Already Live
+Frontend: ⏳ Upload dist/ folder now
+
+Next: Upload files and test in browser
+
+============================================================

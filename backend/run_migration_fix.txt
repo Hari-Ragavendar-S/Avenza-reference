@@ -1,0 +1,9 @@
+# Upload fixed migration
+scp migrations/binary_awards_update.py root@148.135.138.145:/var/www/avenza/backend/migrations/
+
+# Run on VPS
+ssh root@148.135.138.145
+cd /var/www/avenza/backend
+source venv/bin/activate
+python migrations/binary_awards_update.py
+systemctl restart avenza

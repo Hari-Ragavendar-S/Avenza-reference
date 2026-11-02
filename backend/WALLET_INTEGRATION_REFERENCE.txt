@@ -1,0 +1,184 @@
+╔══════════════════════════════════════════════════════════════╗
+║        WEB3 WALLET INTEGRATION - BACKEND COMPLETE            ║
+╚══════════════════════════════════════════════════════════════╝
+
+📋 DEPLOYMENT COMMANDS (Run on VPS)
+═══════════════════════════════════════════════════════════════
+
+# Navigate to backend
+cd /var/www/avenza/backend
+
+# Run deployment script
+python deploy_wallet_integration.py
+
+# OR Manual steps:
+# 1. Run migration
+python migrations/wallet_integration_setup.py
+
+# 2. Install dependencies
+venv/bin/pip install web3==6.15.1 eth-account==0.10.0
+
+# 3. Restart service
+sudo systemctl restart avenza
+
+# 4. Check status
+sudo systemctl status avenza
+
+
+📡 API ENDPOINTS
+═══════════════════════════════════════════════════════════════
+
+1. GET NONCE (First step for wallet auth)
+   POST /api/auth/wallet-nonce
+   Body: {
+     "wallet_address": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb"
+   }
+   Response: {
+     "nonce": "abc123...",
+     "message": "Sign this message to authenticate..."
+   }
+
+2. WALLET LOGIN (Sign in with wallet)
+   POST /api/auth/wallet-login
+   Body: {
+     "wallet_address": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
+     "signature": "0x1234567890abcdef..."
+   }
+   Response: {
+     "success": true,
+     "message": "Login successful",
+     "token": "jwt_token",
+     "user": {...},
+     "wallet_connected": true
+   }
+
+3. CONNECT WALLET (Link wallet to existing account)
+   POST /api/user/connect-wallet
+   Headers: { "Authorization": "Bearer <token>" }
+   Body: {
+     "wallet_address": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
+     "wallet_type": "metamask",
+     "signature": "0x1234567890abcdef..."
+   }
+   Response: {
+     "success": true,
+     "message": "Wallet connected successfully!",
+     "wallet_address": "0x...",
+     "wallet_type": "metamask"
+   }
+
+4. DISCONNECT WALLET
+   POST /api/user/disconnect-wallet
+   Headers: { "Authorization": "Bearer <token>" }
+   Response: {
+     "success": true,
+     "message": "Wallet disconnected successfully"
+   }
+
+5. GET WALLET STATUS
+   GET /api/user/wallet-status
+   Headers: { "Authorization": "Bearer <token>" }
+   Response: {
+     "wallet_connected": true,
+     "wallet_address": "0x...",
+     "wallet_type": "metamask",
+     "connected_at": "2026-09-09 12:00 PM"
+   }
+
+
+🔐 AUTHENTICATION FLOW
+═══════════════════════════════════════════════════════════════
+
+WALLET LOGIN FLOW:
+1. User clicks "Sign in with Wallet"
+2. Frontend requests nonce from /api/auth/wallet-nonce
+3. Frontend asks user to sign message with wallet
+4. Frontend sends signature to /api/auth/wallet-login
+5. Backend verifies signature and returns JWT token
+
+WALLET CONNECTION FLOW:
+1. User logs in with username/password
+2. Goes to profile, clicks "Connect Wallet"
+3. Frontend requests nonce from /api/auth/wallet-nonce
+4. Frontend asks user to sign message
+5. Frontend sends signature to /api/user/connect-wallet
+6. Backend verifies and links wallet to account
+
+
+📊 DATABASE TABLES
+═══════════════════════════════════════════════════════════════
+
+USERS TABLE (Added columns):
+- wallet_address VARCHAR(42)
+- wallet_type VARCHAR(20)
+- wallet_connected_at TIMESTAMP
+
+WALLET_LOGIN_NONCES TABLE:
+- id SERIAL PRIMARY KEY
+- wallet_address VARCHAR(42)
+- nonce VARCHAR(64)
+- created_at TIMESTAMP
+- expires_at TIMESTAMP
+- used BOOLEAN
+
+WALLET_CONNECTION_LOGS TABLE:
+- id SERIAL PRIMARY KEY
+- user_id INTEGER
+- wallet_address VARCHAR(42)
+- wallet_type VARCHAR(20)
+- action VARCHAR(20) (connect/disconnect/login)
+- ip_address VARCHAR(45)
+- user_agent TEXT
+- created_at TIMESTAMP
+
+
+🎨 SUPPORTED WALLETS
+═══════════════════════════════════════════════════════════════
+- MetaMask
+- Trust Wallet
+- SafePal Wallet
+- WalletConnect
+- Coinbase Wallet
+
+
+🔧 TECHNICAL DETAILS
+═══════════════════════════════════════════════════════════════
+
+SIGNATURE VERIFICATION:
+- Uses eth-account library
+- Verifies EIP-191 signed messages
+- Nonce expires in 5 minutes
+- One-time use per nonce
+
+SECURITY FEATURES:
+- Nonce-based authentication (prevents replay attacks)
+- Signature verification (proves wallet ownership)
+- Expiring nonces (5 minute window)
+- One wallet per account limit
+- Audit trail in logs table
+
+WALLET ADDRESS FORMAT:
+- Must start with "0x"
+- Must be 42 characters total
+- Case-insensitive comparison
+
+
+📦 FILES CREATED/MODIFIED
+═══════════════════════════════════════════════════════════════
+
+NEW FILES:
+✅ migrations/wallet_integration_setup.py
+✅ app/schemas/wallet.py
+✅ app/routes/wallet_auth.py
+✅ deploy_wallet_integration.py
+
+MODIFIED FILES:
+✅ app/main.py (added wallet_auth routes)
+✅ app/routes/auth.py (added wallet_connected to login response)
+✅ requirements.txt (added web3, eth-account)
+
+
+✅ BACKEND IMPLEMENTATION COMPLETE!
+═══════════════════════════════════════════════════════════════
+
+Ready for VPS deployment and frontend integration.

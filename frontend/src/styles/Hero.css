@@ -1,0 +1,214 @@
+.hero {
+  background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
+  padding: 90px 0 65px;
+  position: relative;
+  overflow: hidden;
+  min-height: 520px;
+}
+
+.hero-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.hero-content {
+  z-index: 2;
+}
+
+.hero-title {
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary-color) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 28px;
+  max-width: 520px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.hero-visual {
+  position: relative;
+  height: 420px;
+}
+
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.price-card {
+  position: absolute;
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+.price-card.floating {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.price-label {
+  font-size: 14px;
+  color: var(--text-tertiary);
+  margin-bottom: 8px;
+}
+
+.price-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.price-change {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.trading-chart {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 300px;
+  opacity: 0.6;
+}
+
+.chart-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.chart-line {
+  animation: drawLine 2s ease forwards;
+}
+
+@keyframes drawLine {
+  from {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 0;
+  }
+}
+
+.glow-effect {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.15), transparent);
+  border-radius: 50%;
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .hero-title {
+    font-size: 48px;
+  }
+
+  .hero-visual {
+    height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 65px 0 50px;
+    min-height: 460px;
+  }
+
+  .hero-title {
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+
+  .hero-subtitle {
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+
+  .hero-visual {
+    height: 320px;
+  }
+
+  .price-card {
+    padding: 14px;
+  }
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 55px 0 40px;
+    min-height: 400px;
+  }
+
+  .hero-title {
+    font-size: 28px;
+  }
+
+  .hero-subtitle {
+    font-size: 14px;
+  }
+  
+  .hero-visual {
+    height: 280px;
+  }
+  
+  .hero-actions {
+    gap: 12px;
+  }
+}
+
+  .price-value {
+    font-size: 22px;
+  }
+}

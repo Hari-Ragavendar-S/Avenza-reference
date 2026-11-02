@@ -1,0 +1,7 @@
+# Upload fixed files to VPS
+
+scp app/schemas/binary_matching.py root@148.135.138.145:/var/www/avenza/backend/app/schemas/
+scp app/routes/auth.py root@148.135.138.145:/var/www/avenza/backend/app/routes/
+
+# Then restart service
+ssh root@148.135.138.145 "systemctl restart avenza"

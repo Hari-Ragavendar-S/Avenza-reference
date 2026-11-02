@@ -1,0 +1,5 @@
+# Fix uploaded - removed duplicate code
+
+scp app/routes/binary_matching.py root@148.135.138.145:/var/www/avenza/backend/app/routes/
+
+ssh root@148.135.138.145 "systemctl restart avenza"
